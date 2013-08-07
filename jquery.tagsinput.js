@@ -15,11 +15,11 @@
 */
 
 (function($) {
-  var delimiter = new Array();
-  var tags_callbacks = new Array();
-  var format = new Array();
+  var delimiter = {},
+    tags_callbacks = {},
+    formatter = {};
   
-  $.fn.doAutosize = function(o){
+  $.fn.doAutosize = function(o) {
     var minWidth = $(this).data('minwidth'),
       maxWidth = $(this).data('maxwidth'),
       val = '',
@@ -86,6 +86,10 @@
       }
 
       value = jQuery.trim(value);
+      if(formatter[id]) {
+        var f = formatter[id];
+        value = f.call(this, value);
+      }
 
       if (options.unique) {
         var skipTag = $(this).tagExist(value);
@@ -222,7 +226,7 @@
       }
 
       if(settings.formatter) {
-        formatter[id] = formatter;
+        formatter[id] = settings.formatter;
       }
 
       var markup = '<div id="'+id+'_tagsinput" class="tagsinput"><div id="'+id+'_addTag">';

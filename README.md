@@ -50,6 +50,16 @@ described here.
 	  autocomplete:{selectFirst:true,width:'100px',autoFill:true}
 	});
 
+You can supple a formatter to format your tag content, For example:
+  
+  # Input tag's letter which exclude in the regexp will be remove
+	$('#tags').tagsInput({
+	  formatter: function(tag_val) {
+      var regexp = /[^\w\-+#.;]/g;
+      tag_val.replace(regexp, '');
+    }
+  });
+
 You can add and remove tags by calling the addTag() and removeTag() functions.
 
 	$('#tags').addTag('foo');
@@ -95,6 +105,7 @@ option to false.
 	   'onAddTag':callback_function,
 	   'onRemoveTag':callback_function,
 	   'onChange' : callback_function,
+      formatter: formatter_fuction,
 	   'removeWithBackspace' : true,
 	   'minChars' : 0,
 	   'maxChars' : 0 //if not provided there is no limit,
