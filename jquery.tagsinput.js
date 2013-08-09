@@ -79,6 +79,7 @@
 
     this.each(function() {
       var id = $(this).attr('id');
+      var tag_input = $('#'+id+'_tag');
 
       var tagslist = $(this).val().split(delimiter[id]);
       if (tagslist[0] == '') {
@@ -89,13 +90,18 @@
       if(formatter[id]) {
         var f = formatter[id];
         value = f.call(this, value);
+        tag_input.val(value);
+      }
+      
+      if(value === "") {
+        tag_input.addClass('not_valid');
       }
 
       if (options.unique) {
         var skipTag = $(this).tagExist(value);
         if(skipTag == true) {
           //Marks fake input as not_valid to let styling it
-          $('#'+id+'_tag').addClass('not_valid');
+          tag_input.addClass('not_valid');
         }
       } else {
         var skipTag = false;
@@ -182,20 +188,20 @@
 
   $.fn.tagsInput = function(options) {
     var settings = jQuery.extend({
-      interactive:true,
+      interactive: true,
       defaultText:'add a tag',
-      minChars:0,
-      width:'300px',
-      height:'100px',
+      minChars: 0,
+      width: '300px',
+      height: '100px',
       autocomplete: {selectFirst: false },
-      'hide':true,
-      'delimiter':',',
-      'unique':true,
-      removeWithBackspace:true,
-      placeholderColor:'#666666',
+      hide: true,
+      delimiter: ',',
+      unique: true,
+      removeWithBackspace: true,
+      placeholderColor: '#666666',
       autosize: true,
       comfortZone: 20,
-      inputPadding: 6*2
+      inputPadding: 6 * 2
     }, options);
 
     this.each(function() {
